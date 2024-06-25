@@ -1,8 +1,6 @@
-import { useEffect, useRef, useState } from "react";
-import StarRating from "./StarRating";
+import { useState } from "react";
 import { useMovies } from "./hooks/useMovies";
 import { useLocalStorageState } from "./hooks/useLocalStorageState";
-import { useKey } from "./hooks/useKey";
 import Loader from "./components/Loader";
 import ErrorMessage from "./components/ErrorMessage";
 import NavBar from "./components/NavBar";
@@ -36,6 +34,7 @@ export default function App() {
 
   function handleDeleteWatched(id) {
     setWatched((watched) => watched.filter((movie) => movie.imdbID !== id));
+    localStorage.removeItem("watched");
   }
 
   return (
