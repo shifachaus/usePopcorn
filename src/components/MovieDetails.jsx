@@ -3,6 +3,7 @@ import StarRating from "../StarRating";
 import Loader from "./Loader";
 import { useKey } from "../hooks/useKey";
 import { KEY } from "../data";
+import { useMovieDetails } from "../hooks/useMovieDetails";
 
 export default function MovieDetails({
   selectedId,
@@ -10,10 +11,9 @@ export default function MovieDetails({
   onAddWatched,
   watched,
 }) {
-  const [movie, setMovie] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
   const [userRating, setUserRating] = useState("");
 
+  const { movie, isLoading } = useMovieDetails(selectedId);
   const isWatched = watched?.map((movie) => movie.imdbID).includes(selectedId);
 
   const watchedUserRating = watched?.find(
@@ -49,22 +49,6 @@ export default function MovieDetails({
   }
 
   useKey("Escape", onCloseMovie);
-
-  useEffect(() => {
-    async function getMovieDetails() {
-      setIsLoading(true);
-      const res = await fetch(
-        `http://www.omdbapi.com/?apikey=${KEY}&i=${selectedId}`
-      );
-
-      const data = await res.json();
-
-      setMovie(data);
-      setIsLoading(false);
-    }
-
-    getMovieDetails();
-  }, [selectedId]);
 
   useEffect(() => {
     if (!title) return;
