@@ -8,7 +8,7 @@ export function useMovieDetails(ID) {
   useEffect(() => {
     async function getMovieDetails() {
       setIsLoading(true);
-      const res = await fetch(`http://www.omdbapi.com/?apikey=${KEY}&i=${ID}`);
+      const res = await fetch(`https://www.omdbapi.com/?apikey=${KEY}&i=${ID}`);
 
       const data = await res.json();
 
